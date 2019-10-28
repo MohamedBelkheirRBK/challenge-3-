@@ -1,0 +1,12 @@
+body {
+	background-color: #AAF;
+}
+
+h1 {
+	font-family: monospace;
+}
+
+input {
+	width: 200px;
+	height: 30px;
+}

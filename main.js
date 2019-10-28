@@ -11,10 +11,60 @@
 //==============================================================================
 //lets make an employee profile using closures
 
+//create employee enclosure function
+
 function employee(name, salary) {
+    var employeeName = name; //save employee name, salary and list of friends in an array.
+    var employeeSalary = salary;
+    var friends = [];
+
+    //return object with functions that can access our enclosure
     return {
-        name: name,
-        salary: salary
+        //function that returns employee name
+        sayMyName: function(){
+            return employeeName;
+        },
+        //function that returns Hello + Employee name
+        sayHello: function(){
+            return 'hello '+employeeName;
+        },
+        //function that increases the enclosure's employeeSalary value by n amount and returns a report on the salary after the increase
+        increaseSalary: function(n){
+            employeeSalary+= n;
+            return "Your salary is $"+employeeSalary;
+        },
+        //function that adds new friends to the friend list
+        addFriend: function(employee){
+            friends.push(employee);
+            return "You just became friends with " + this.displayFriends();
+        },
+        //function that returns a string of your friends
+        displayFriends: function(){
+            if(friends.length < 1) //check if he has no friends
+                return "You have no friends";
+
+            if(friends.length < 2) //check if it's only one friend
+                return friends[0].sayMyName();
+
+            if(friends.length < 3) //check if it's only two
+                return friends[0].sayMyName() + " and " + friends[1].sayMyName();
+
+            //if he has 3 or more, construct the proper string to display
+            //starting with the first friend
+            var strFr = friends[0].sayMyName();
+            //concating ", friendName" in a loop until the one before the last element
+            for(var i = 1; i<friends.length-1; i++){
+                strFr+= ", " + friends[i].sayMyName();
+            }
+            //joining the last name with a " and " between it and the previous names
+            return strFr+" and "+friends[friends.length-1].sayMyName();
+        },
+        //function that returns number of friends in friends array
+        listFriends: function(){
+            if(friends.length === 1)
+                return "You have one friend";
+            return "You have "+friends.length+ "friends";
+        }
     }
 }
 
@@ -68,11 +118,47 @@ var employeeC = employee("Sara", 150);
 //    and when called again it will make it false.
 
 
-// Write your code here .....
+function makePet(petName){
+    return {
+        name: petName,
+        available: false,
+        ageUp: ageUp,
+        addInfo: addInfo,
+        availablity: availability,
+        toggle: toggle,
+    }
+}
+
+function addInfo(age, owner, gender, species){
+    this.age = age;
+    this.owner = owner;
+    this.gender = gender;
+    this.species = species;
+}
+
+function ageUp(){
+    if(this.age===undefined)
+        return "age not set"
+    else
+        this.age += 1;
+}
+
+function availability(){
+    return this.available;
+}
+
+function toggle(){
+    this.available = !this.available;
+}
+
+var myPet = makePet("Doge")
+myPet.addInfo(7, "Me", "female", "Shiba Inu");
+
+
 
 
 // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
-
+// reading what? ;)
 //=============================================================================
 /*                                  Q3                                       */
 //=============================================================================
@@ -103,7 +189,13 @@ function reduce(array, f, acc) {
 
 // Write your code here .....
 
-
+function max(array){
+    return reduce(array, function(max, element){
+        if(max < element)
+            max = element
+        return max;
+    })
+}
 
 
 //================================================================================
